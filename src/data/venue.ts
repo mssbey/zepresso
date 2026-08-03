@@ -1,0 +1,26 @@
+import type { VenueInfo } from "@/types/menu";
+
+export const venue: VenueInfo = {
+  name: "Zepresso",
+  tagline: "Kahvenin en karanlık ve en güzel hâli.",
+  district: "Alsancak",
+  city: "İzmir",
+  address: "Kıbrıs Şehitleri Cad. No: 142/A, Alsancak, Konak / İzmir",
+  phone: "0232 464 18 30",
+  phoneHref: "tel:+902324641830",
+  instagram: "@zepressocoffee",
+  instagramUrl: "https://instagram.com/zepressocoffee",
+  mapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Kıbrıs+Şehitleri+Caddesi+Alsancak+İzmir",
+  wifi: { network: "Zepresso_Guest", password: "kahve2024" },
+  hours: [
+    { days: "Pazartesi – Perşembe", open: "08:00", close: "23:30" },
+    { days: "Cuma – Cumartesi", open: "08:00", close: "01:00" },
+    { days: "Pazar", open: "09:00", close: "23:00" },
+  ],
+  todayClosing: "23:30",
+  allergenNotice:
+    "Ürünlerimiz gluten, süt, yumurta, susam ve sert kabuklu yemiş içerebilecek bir mutfakta hazırlanmaktadır. Çapraz bulaşma riski tamamen ortadan kaldırılamamaktadır.",
+  serviceNote:
+    "Alerjen hassasiyetiniz, porsiyon tercihiniz veya günün önerileri için garsonumuza danışabilirsiniz. Menüde göremediğiniz bir tarifi de sorabilirsiniz — çoğu zaman hazırlayabiliyoruz.",
+};

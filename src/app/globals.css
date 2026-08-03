@@ -1,26 +1,300 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ==========================================================================
+   Zepresso — tasarım belirteçleri
+   Yalnızca karanlık tema. Tüm yüzeyler tek bir sıcaklık ekseninde ilerler.
+   ========================================================================== */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Marka paleti */
+  --z-void: #080a0c;
+  --z-surface-1: #111418;
+  --z-surface-2: #171b20;
+  --z-surface-3: #1e242a;
+  --z-espresso: #c47a45;
+  --z-gold: #e4b46a;
+  --z-ink: #f5f1ea;
+  --z-muted: #9b9b9b;
+  --z-line: rgb(245 241 234 / 0.08);
+  --z-line-strong: rgb(245 241 234 / 0.14);
+
+  /* Sticky katmanların yükseklikleri — scroll-margin hesapları buradan okur.
+     Kategori rayı sayfa kaydırıldığında yapışır; o anda başlık zaten
+     küçülmüş hâldedir, bu yüzden ölçü küçük başlığın yüksekliğidir. */
+  --z-header-h: 54px;
+  --z-rail-h: 56px;
+  --z-sticky-top: calc(env(safe-area-inset-top, 0px) + var(--z-header-h));
+
+  /* shadcn eşlemesi */
+  --background: var(--z-void);
+  --foreground: var(--z-ink);
+  --card: var(--z-surface-1);
+  --card-foreground: var(--z-ink);
+  --popover: var(--z-surface-1);
+  --popover-foreground: var(--z-ink);
+  --primary: var(--z-gold);
+  --primary-foreground: #14100a;
+  --secondary: var(--z-surface-2);
+  --secondary-foreground: var(--z-ink);
+  --muted: var(--z-surface-2);
+  --muted-foreground: var(--z-muted);
+  --accent: var(--z-surface-3);
+  --accent-foreground: var(--z-ink);
+  --destructive: oklch(0.62 0.19 25);
+  --border: var(--z-line);
+  --input: var(--z-line-strong);
+  --ring: var(--z-espresso);
+  --radius: 0.875rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Marka kısayolları */
+  --color-void: var(--z-void);
+  --color-surface: var(--z-surface-1);
+  --color-surface-2: var(--z-surface-2);
+  --color-surface-3: var(--z-surface-3);
+  --color-espresso: var(--z-espresso);
+  --color-gold: var(--z-gold);
+  --color-ink: var(--z-ink);
+  --color-dim: var(--z-muted);
+  --color-line: var(--z-line);
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply font-sans;
+    background-color: var(--z-void);
+    scroll-behavior: smooth;
+    /* `clip`, `hidden`den farklı olarak yeni bir kaydırma bağlamı yaratmaz;
+       böylece sticky başlık ve kategori rayı bozulmadan çalışır. */
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+    font-synthesis-weight: none;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  /* Odak halkası: her yerde tutarlı, altın tonlu, arka planla nefes alan */
+  :focus-visible {
+    outline: 2px solid var(--z-gold);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--z-espresso) 45%, transparent);
+    color: var(--z-ink);
+  }
+
+  /* Sticky başlık + kategori rayının altında kalmasın diye bölüm payı */
+  section[id] {
+    scroll-margin-top: calc(var(--z-sticky-top) + var(--z-rail-h) + 12px);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ==========================================================================
+   Yardımcı sınıflar
+   ========================================================================== */
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Yatay kaydırma raylarında kart hizalaması */
+@utility snap-rail {
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* İnce üst çizgi — düz border yerine ışık gibi davranır */
+@utility hairline-t {
+  box-shadow: inset 0 1px 0 0 rgb(245 241 234 / 0.06);
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+@layer components {
+  /* Kartların "düz kutu" görünmesini engelleyen katmanlı yüzey */
+  .surface-card {
+    position: relative;
+    background:
+      radial-gradient(
+        120% 90% at 12% 0%,
+        rgb(196 122 69 / 0.08) 0%,
+        transparent 55%
+      ),
+      linear-gradient(168deg, var(--z-surface-2) 0%, var(--z-surface-1) 62%, #0d1014 100%);
+    box-shadow:
+      inset 0 1px 0 0 rgb(245 241 234 / 0.07),
+      inset 0 0 0 1px rgb(245 241 234 / 0.04),
+      0 18px 40px -24px rgb(0 0 0 / 0.9);
+  }
+
+  .surface-card-hover {
+    transition:
+      transform 420ms var(--ease-out-soft),
+      box-shadow 420ms var(--ease-out-soft);
+  }
+
+  @media (hover: hover) {
+    .surface-card-hover:hover {
+      box-shadow:
+        inset 0 1px 0 0 rgb(228 180 106 / 0.16),
+        inset 0 0 0 1px rgb(228 180 106 / 0.1),
+        0 26px 60px -28px rgb(0 0 0 / 1),
+        0 0 40px -18px rgb(196 122 69 / 0.35);
+    }
+  }
+
+  /* Kontrollü cam efekti — yalnızca sticky/overlay katmanlarda */
+  .glass {
+    background: color-mix(in srgb, var(--z-surface-1) 72%, transparent);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+
+  .glass-strong {
+    background: color-mix(in srgb, #0a0d10 88%, transparent);
+    backdrop-filter: blur(26px) saturate(150%);
+    -webkit-backdrop-filter: blur(26px) saturate(150%);
+  }
+
+  /* Sayfanın tamamına yayılan ince film grenii */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Bölüm başlıklarının üstündeki küçük etiket */
+  .eyebrow {
+    font-size: 0.6875rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--z-gold);
+    font-weight: 600;
+  }
+
+  /* Yatay kaydırma raylarının kenarlarındaki yumuşama */
+  .fade-edges-x {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 20px,
+      #000 calc(100% - 28px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 20px,
+      #000 calc(100% - 28px),
+      transparent 100%
+    );
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Hero'daki yavaş ışık gezinmesi */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(4%, -3%, 0) scale(1.12);
+    opacity: 0.8;
+  }
+}
+
+/* ==========================================================================
+   Hareket tercihine saygı
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
