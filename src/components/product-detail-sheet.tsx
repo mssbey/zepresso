@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Flame, Info, Leaf, TriangleAlert } from "lucide-react";
 
 import { FavoriteButton } from "@/components/favorite-button";
@@ -53,9 +54,18 @@ function DetailContent({
 }) {
   const category = categories.find((item) => item.id === product.categoryId);
   const related = getRelatedProducts(product, 6);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Farklı bir ürüne geçildiğinde panel, önceki ürünün kaydırma konumunda kalmasın diye başa döner.
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  }, [product.id]);
 
   return (
-    <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+    <div
+      ref={scrollRef}
+      className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
+    >
       {/* Görsel */}
       <div className="relative">
         <ProductImage

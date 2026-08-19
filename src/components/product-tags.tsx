@@ -1,6 +1,6 @@
-import { Flame, Leaf, Snowflake, Sparkles, Star } from "lucide-react";
+import { Flame, Leaf, Snowflake, Sparkles, Star, Tag } from "lucide-react";
 
-import { tags as tagMap } from "@/data/categories";
+import { badges as badgeMap, tags as tagMap } from "@/data/categories";
 import { cn } from "@/lib/utils";
 import type { BadgeId, TagId } from "@/types/menu";
 
@@ -12,7 +12,7 @@ const toneStyles: Record<string, string> = {
   copper: "text-espresso ring-espresso/25 bg-espresso/8",
 };
 
-const tagIcons: Record<TagId, typeof Leaf> = {
+const tagIcons: Record<string, typeof Leaf> = {
   vegan: Leaf,
   acili: Flame,
   buzlu: Snowflake,
@@ -22,13 +22,14 @@ const tagIcons: Record<TagId, typeof Leaf> = {
 
 export function TagPill({ id, className }: { id: TagId; className?: string }) {
   const tag = tagMap[id];
-  const Icon = tagIcons[id];
+  if (!tag) return null;
+  const Icon = tagIcons[id] ?? Tag;
 
   return (
     <span
       className={cn(
         "inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[0.625rem] leading-none font-semibold tracking-[0.06em] whitespace-nowrap ring-1 ring-inset",
-        toneStyles[tag.tone],
+        toneStyles[tag.tone] ?? toneStyles.amber,
         className,
       )}
     >
@@ -49,7 +50,7 @@ export function TagRow({ ids, className }: { ids: TagId[]; className?: string })
   );
 }
 
-const badgeStyles: Record<BadgeId, string> = {
+const badgeStyles: Record<string, string> = {
   "cok-sevilen":
     "text-[#14100a] bg-gradient-to-r from-gold to-[#d59a4f] shadow-[0_6px_18px_-8px_rgba(228,180,106,0.9)]",
   yeni: "text-ink bg-espresso/85 shadow-[0_6px_18px_-8px_rgba(196,122,69,0.9)]",
@@ -57,25 +58,25 @@ const badgeStyles: Record<BadgeId, string> = {
     "text-gold bg-[#0d1013]/80 ring-1 ring-inset ring-gold/35 backdrop-blur-sm",
 };
 
-const badgeLabels: Record<BadgeId, string> = {
-  "cok-sevilen": "Çok Sevilen",
-  yeni: "Yeni",
-  "zepresso-imzasi": "Zepresso İmzası",
-};
+const fallbackBadgeStyle =
+  "text-gold bg-[#0d1013]/80 ring-1 ring-inset ring-gold/35 backdrop-blur-sm";
 
 export function ProductBadge({ id, className }: { id: BadgeId; className?: string }) {
+  const badge = badgeMap[id];
+  if (!badge) return null;
+
   return (
     <span
       className={cn(
         "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[0.625rem] leading-none font-bold tracking-[0.1em] uppercase",
-        badgeStyles[id],
+        badgeStyles[id] ?? fallbackBadgeStyle,
         className,
       )}
     >
       {id === "zepresso-imzasi" && (
         <Sparkles className="size-2.5" strokeWidth={2.6} aria-hidden="true" />
       )}
-      {badgeLabels[id]}
+      {badge.label}
     </span>
   );
 }

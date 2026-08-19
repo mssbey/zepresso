@@ -1,11 +1,4 @@
-/**
- * OTOMATİK ÜRETİLDİ — elle düzenlemeyin.
- * Admin panelden içerik değiştikçe bu dosya `src/lib/admin/content-store.ts`
- * tarafından `src/data/content/*.json` kaynağından yeniden üretilir.
- */
-import type { Product } from "@/types/menu";
-
-export const products: Product[] = [
+[
   {
     "id": "zepresso-signature-latte",
     "name": "Zepresso Signature Latte",
@@ -1642,18 +1635,4 @@ export const products: Product[] = [
       "seed": 0.15
     }
   }
-];
-
-export const featuredProducts = products.filter((product) => product.featured);
-
-export const productsByCategory = (categoryId: Product["categoryId"]) =>
-  products.filter((product) => product.categoryId === categoryId);
-
-export const getProductById = (id: string) =>
-  products.find((product) => product.id === id);
-
-/** Detay panelinde gösterilen benzer ürünler — aynı kategoriden, kendisi hariç. */
-export const getRelatedProducts = (product: Product, limit = 6) =>
-  products
-    .filter((item) => item.categoryId === product.categoryId && item.id !== product.id)
-    .slice(0, limit);
+]

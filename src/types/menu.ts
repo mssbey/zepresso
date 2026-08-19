@@ -14,11 +14,19 @@ export type CategoryId =
   | "tatlilar"
   | "atistirmaliklar";
 
-/** Ürün listesinde küçük etiket olarak gösterilen özellikler. */
-export type TagId = "vegan" | "acili" | "buzlu" | "yeni" | "cok-sevilen";
+/**
+ * Ürün listesinde küçük etiket olarak gösterilen özellikler.
+ * Admin panelden yeni etiketler eklenebildiği için serbest metin kimliğidir;
+ * bilinen değerler `src/data/categories.ts` içindeki `tags` kaydında tutulur.
+ */
+export type TagId = string;
 
-/** Öne çıkan kartlarda gösterilen tekil rozet. */
-export type BadgeId = "cok-sevilen" | "yeni" | "zepresso-imzasi";
+/**
+ * Öne çıkan kartlarda gösterilen tekil rozet.
+ * Admin panelden yeni rozetler eklenebildiği için serbest metin kimliğidir;
+ * bilinen değerler `src/data/categories.ts` içindeki `badges` kaydında tutulur.
+ */
+export type BadgeId = string;
 
 export interface Category {
   id: CategoryId;
