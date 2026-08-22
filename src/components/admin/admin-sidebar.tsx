@@ -9,6 +9,7 @@ import {
   LayoutGrid,
   LogOut,
   Megaphone,
+  QrCode,
   Store,
   Tags,
 } from "lucide-react"
@@ -23,6 +24,7 @@ const NAV_ITEMS = [
   { href: "/admin/categories", label: "Kategoriler", icon: FolderTree },
   { href: "/admin/tags-badges", label: "Etiket & Rozet", icon: Tags },
   { href: "/admin/venue", label: "Mekan Bilgisi", icon: Store },
+  { href: "/admin/qr", label: "QR Kod", icon: QrCode },
 ] as const
 
 export function AdminSidebar() {
