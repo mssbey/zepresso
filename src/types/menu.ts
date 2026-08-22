@@ -140,3 +140,28 @@ export interface VenueInfo {
   allergenNotice: string;
   serviceNote: string;
 }
+
+/** Menü açılışında gösterilen, admin panelden yönetilebilir fırsat paketi. */
+export interface Campaign {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  /** İndirim karşılaştırmasında üstü çizili gösterilen eski fiyat. */
+  originalPrice?: number;
+  /** Kartın üstünde görünen kısa vurgu; örn. "Günün Fırsatı". */
+  badge: string;
+  /** `public/` yolu veya Vercel Blob URL'i. */
+  image: string;
+  active: boolean;
+  /** Bağlı ürünlerin kimlikleri; müşteri ürün detayına doğrudan geçebilir. */
+  productIds?: string[];
+  /** Kampanyanın mutlak yayın aralığı (yerel ISO tarih-saat metni). */
+  startsAt?: string;
+  endsAt?: string;
+  /** 0=Pazar ... 6=Cumartesi. Boş bırakılırsa haftanın her günü. */
+  daysOfWeek?: number[];
+  /** Gün içindeki tekrarlanan yayın aralığı. */
+  dailyStart?: string;
+  dailyEnd?: string;
+}

@@ -8,6 +8,7 @@ import {
   FolderTree,
   LayoutGrid,
   LogOut,
+  Megaphone,
   Store,
   Tags,
 } from "lucide-react"
@@ -18,6 +19,7 @@ import { Button } from "@/components/ui/button"
 const NAV_ITEMS = [
   { href: "/admin", label: "Panel", icon: LayoutGrid },
   { href: "/admin/products", label: "Ürünler", icon: Coffee },
+  { href: "/admin/campaigns", label: "Kampanyalar", icon: Megaphone },
   { href: "/admin/categories", label: "Kategoriler", icon: FolderTree },
   { href: "/admin/tags-badges", label: "Etiket & Rozet", icon: Tags },
   { href: "/admin/venue", label: "Mekan Bilgisi", icon: Store },

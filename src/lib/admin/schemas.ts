@@ -129,6 +129,52 @@ export const venueSchema = z.object({
   serviceNote: z.string().min(1),
 });
 
+export const campaignSchema = z.object({
+  id: idSchema,
+  title: z.string().min(1, "Paket adı gerekli"),
+  description: z.string().min(1, "Açıklama gerekli"),
+  price: z.number().positive("Fiyat 0'dan büyük olmalı"),
+  originalPrice: z.number().positive("Eski fiyat 0'dan büyük olmalı").optional(),
+  badge: z.string().min(1, "Rozet metni gerekli"),
+  image: z.string().min(1, "Görsel gerekli"),
+  active: z.boolean(),
+  productIds: z.array(idSchema).optional(),
+  startsAt: z.string().optional(),
+  endsAt: z.string().optional(),
+  daysOfWeek: z.array(z.number().int().min(0).max(6)).min(1, "En az bir gün seçin").optional(),
+  dailyStart: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Başlangıç saati geçersiz").optional(),
+  dailyEnd: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Bitiş saati geçersiz").optional(),
+}).superRefine((campaign, context) => {
+  if (campaign.originalPrice !== undefined && campaign.originalPrice <= campaign.price) {
+    context.addIssue({
+      code: "custom",
+      path: ["originalPrice"],
+      message: "Eski fiyat kampanya fiyatından büyük olmalı",
+    });
+  }
+  if (Boolean(campaign.dailyStart) !== Boolean(campaign.dailyEnd)) {
+    context.addIssue({
+      code: "custom",
+      path: ["dailyEnd"],
+      message: "Günlük başlangıç ve bitiş saatini birlikte girin",
+    });
+  }
+  if (
+    campaign.startsAt &&
+    campaign.endsAt &&
+    new Date(campaign.endsAt).getTime() <= new Date(campaign.startsAt).getTime()
+  ) {
+    context.addIssue({
+      code: "custom",
+      path: ["endsAt"],
+      message: "Bitiş tarihi başlangıçtan sonra olmalı",
+    });
+  }
+});
+
+export const campaignsSchema = z.array(campaignSchema);
+
 export type ProductInput = z.infer<typeof productInputSchema>;
 export type TagInput = z.infer<typeof tagInputSchema>;
 export type BadgeInput = z.infer<typeof badgeInputSchema>;
+export type CampaignInput = z.infer<typeof campaignSchema>;

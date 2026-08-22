@@ -1,7 +1,7 @@
 /**
  * OTOMATİK ÜRETİLDİ — elle düzenlemeyin.
- * Admin panelden içerik değiştikçe bu dosya `src/lib/admin/content-store.ts`
- * tarafından `src/data/content/*.json` kaynağından yeniden üretilir.
+ * Admin panelden içerik değiştikçe bu dosya Vercel Blob'daki
+ * kaynaktan yeniden üretilir (`src/lib/server/content-render.js`).
  */
 import type { Product } from "@/types/menu";
 

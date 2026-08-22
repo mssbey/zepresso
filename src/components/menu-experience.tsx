@@ -13,9 +13,11 @@ import { MobileBottomNav } from "@/components/mobile-bottom-nav";
 import { ProductDetailSheet } from "@/components/product-detail-sheet";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { SearchOverlay } from "@/components/search-overlay";
+import { WelcomeCampaigns } from "@/components/welcome-campaigns";
 import { VenueInfo } from "@/components/venue-info";
+import { campaigns } from "@/data/campaigns";
 import { categories } from "@/data/categories";
-import { featuredProducts, productsByCategory } from "@/data/products";
+import { featuredProducts, products, productsByCategory } from "@/data/products";
 import { useActiveSection } from "@/hooks/use-active-section";
 import type { CategoryId } from "@/types/menu";
 
@@ -75,6 +77,11 @@ function Experience() {
 
   return (
     <>
+      <WelcomeCampaigns
+        campaigns={campaigns}
+        products={products}
+        onOpenProduct={handleSelectProduct}
+      />
       <ScrollProgress />
       <Header />
 

@@ -3,8 +3,9 @@ import path from "node:path";
 
 import { list, put } from "@vercel/blob";
 
-import type { Badge, Category, Product, Tag, VenueInfo } from "@/types/menu";
+import type { Badge, Campaign, Category, Product, Tag, VenueInfo } from "@/types/menu";
 import {
+  renderCampaignsModule,
   renderCategoriesModule,
   renderProductsModule,
   renderVenueModule,
@@ -143,5 +144,25 @@ export async function writeVenue(venue: VenueInfo): Promise<void> {
   const jsonBody = JSON.stringify(venue, null, 2) + "\n";
   await writeBlobJson("venue.json", venue);
   await bestEffortLocalWrite("venue.json", jsonBody, "venue.ts", renderVenueModule(venue));
+  await triggerRedeploy();
+}
+
+/* ---------------------------------------------------------------- campaigns */
+
+export async function readCampaigns(): Promise<Campaign[]> {
+  const fromBlob = await readBlobJson<Campaign[]>("campaigns.json");
+  if (fromBlob) return fromBlob;
+  return readLocalJson<Campaign[]>("campaigns.json");
+}
+
+export async function writeCampaigns(campaigns: Campaign[]): Promise<void> {
+  const jsonBody = JSON.stringify(campaigns, null, 2) + "\n";
+  await writeBlobJson("campaigns.json", campaigns);
+  await bestEffortLocalWrite(
+    "campaigns.json",
+    jsonBody,
+    "campaigns.ts",
+    renderCampaignsModule(campaigns),
+  );
   await triggerRedeploy();
 }

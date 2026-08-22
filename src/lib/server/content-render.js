@@ -46,3 +46,10 @@ export function renderVenueModule(venue) {
 export const venue: VenueInfo = ${JSON.stringify(venue, null, 2)};
 `;
 }
+
+export function renderCampaignsModule(campaigns) {
+  return `${GENERATED_HEADER}import type { Campaign } from "@/types/menu";
+
+export const campaigns: Campaign[] = ${JSON.stringify(campaigns, null, 2)};
+`;
+}

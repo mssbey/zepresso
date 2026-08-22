@@ -23,6 +23,7 @@ import { fileURLToPath } from "node:url";
 import { list, put } from "@vercel/blob";
 
 import {
+  renderCampaignsModule,
   renderCategoriesModule,
   renderProductsModule,
   renderVenueModule,
@@ -37,6 +38,7 @@ const ENTRIES = [
   { key: "products.json", tsFile: "products.ts", render: renderProductsModule },
   { key: "categories.json", tsFile: "categories.ts", render: renderCategoriesModule },
   { key: "venue.json", tsFile: "venue.ts", render: renderVenueModule },
+  { key: "campaigns.json", tsFile: "campaigns.ts", render: renderCampaignsModule },
 ];
 
 async function readFromBlob(key) {
