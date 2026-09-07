@@ -1,7 +1,7 @@
 /**
  * Zepresso — ürün görseli üretici (CLI).
  *
- * `src/data/products.ts` içindeki `art` tarifini okur ve her ürün için
+ * `src/data/content/products.json` içindeki `art` tarifini okur ve her ürün için
  * `public/menu/<id>.svg` dosyasını yazar. Sahne üretim mantığı
  * `src/lib/server/art-render.js` içinde paylaşılıyor (admin panel de aynı
  * modülü kullanır).
@@ -9,19 +9,21 @@
  * Çalıştırmak için:  npm run art
  */
 
-import { mkdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { products } from "../src/data/products.ts";
 import { buildScene, buildHero } from "../src/lib/server/art-render.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_DIR = path.join(ROOT, "public", "menu");
+const PRODUCTS_FILE = path.join(ROOT, "src", "data", "content", "products.json");
 
 /* ---------------------------------------------------------------- çalıştır */
 
 async function main() {
+  const products = JSON.parse(await readFile(PRODUCTS_FILE, "utf8"));
+
   await rm(OUT_DIR, { recursive: true, force: true });
   await mkdir(OUT_DIR, { recursive: true });
 

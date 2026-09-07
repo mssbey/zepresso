@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Manrope } from "next/font/google";
 
-import { venue } from "@/data/venue";
 import "./globals.css";
 
 /** Başlıklar: karakterli, zarif serif. */
@@ -30,12 +29,7 @@ export const metadata: Metadata = {
     "Zepresso Alsancak dijital menüsü. Sıcak ve soğuk kahveler, imza içecekler, çaylar, tatlılar ve atıştırmalıklar.",
   applicationName: "Zepresso",
   formatDetection: { telephone: true, address: false, email: false },
-  openGraph: {
-    title: "Zepresso — Menü",
-    description: venue.tagline,
-    locale: "tr_TR",
-    type: "website",
-  },
+  /* openGraph, mekân bilgisinden türetildiği için `src/app/page.tsx` içinde. */
   robots: { index: false },
 };
 

@@ -737,7 +737,7 @@
     "id": "aci-cikolata-chili",
     "name": "Acı Çikolata & Chili",
     "categoryId": "imza-icecekler",
-    "price": 190,
+    "price": 400,
     "summary": "Bitter çikolata, ancho chili ve tarçın",
     "description": "Aztek geleneğinden esinlenen tarif. Bitter çikolata, ancho chili ve tarçın ile yavaş yavaş ısıtılıyor. İlk yudum yumuşak, bitiş sıcak. Acılık seviyesi orta; garsonumuzdan hafif isteyebilirsiniz.",
     "ingredients": [
@@ -912,7 +912,7 @@
     "id": "adacayi-bal",
     "name": "Adaçayı & Bal",
     "categoryId": "caylar",
-    "price": 105,
+    "price": 150,
     "summary": "Ege adaçayı, akasya balı ve limon dilimi",
     "description": "Ege yamaçlarından toplanan adaçayı yaprakları demleniyor; yanında akasya balı ve limon dilimi ile servis ediliyor. Soğuk günlerde en çok istenen infüzyonumuz.",
     "ingredients": [

@@ -5,11 +5,9 @@ import { Flame, Info, Leaf, TriangleAlert } from "lucide-react";
 
 import { FavoriteButton } from "@/components/favorite-button";
 import { ProductImage } from "@/components/product-image";
+import { useMenuContent } from "@/components/menu-content";
 import { ProductBadge, TagRow } from "@/components/product-tags";
 import { ResponsiveSheet } from "@/components/responsive-sheet";
-import { categories } from "@/data/categories";
-import { getProductById, getRelatedProducts } from "@/data/products";
-import { venue } from "@/data/venue";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/types/menu";
 
@@ -28,6 +26,7 @@ export function ProductDetailSheet({
   onOpenChange: (open: boolean) => void;
   onSelectProduct: (id: string) => void;
 }) {
+  const { getProductById } = useMenuContent();
   const product = productId ? getProductById(productId) : undefined;
 
   return (
@@ -52,6 +51,7 @@ function DetailContent({
   product: Product;
   onSelectProduct: (id: string) => void;
 }) {
+  const { categories, getRelatedProducts, venue } = useMenuContent();
   const category = categories.find((item) => item.id === product.categoryId);
   const related = getRelatedProducts(product, 6);
   const scrollRef = useRef<HTMLDivElement>(null);

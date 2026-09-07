@@ -5,40 +5,26 @@ import { Search, SearchX, X } from "lucide-react";
 import { Dialog as DialogPrimitive, VisuallyHidden } from "radix-ui";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { useMenuContent } from "@/components/menu-content";
 import { ProductImage } from "@/components/product-image";
 import { TagRow } from "@/components/product-tags";
 import { SkeletonCard } from "@/components/skeleton-card";
-import { categories, tags as tagMap } from "@/data/categories";
-import { products } from "@/data/products";
 import { formatPrice, normalize } from "@/lib/format";
 import type { Product } from "@/types/menu";
 
-const categoryNames = new Map(categories.map((item) => [item.id, item.name]));
-
-/** Arama dizini bir kez kurulur; her tuş vuruşunda yeniden hesaplanmaz. */
-const searchIndex = products.map((product) => ({
-  product,
-  haystack: normalize(
-    [
-      product.name,
-      product.summary,
-      product.description,
-      categoryNames.get(product.categoryId) ?? "",
-      ...product.ingredients,
-      ...product.allergens,
-      ...product.tags.map((tag) => tagMap[tag].label),
-    ].join(" "),
-  ),
-  name: normalize(product.name),
-}));
-
 const suggestions = ["Cold brew", "Vegan", "Tatlı", "Matcha", "Fıstık", "Buzlu"];
 
-function search(query: string): Product[] {
+interface SearchEntry {
+  product: Product;
+  haystack: string;
+  name: string;
+}
+
+function search(index: SearchEntry[], query: string): Product[] {
   const terms = normalize(query).split(/\s+/).filter(Boolean);
   if (terms.length === 0) return [];
 
-  return searchIndex
+  return index
     .filter((entry) => terms.every((term) => entry.haystack.includes(term)))
     .sort((a, b) => {
       // Adında geçenler önce gelsin.
@@ -62,6 +48,28 @@ export function SearchOverlay({
   const [pending, setPending] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const reduced = useReducedMotion();
+  const { products, tags, categoryName } = useMenuContent();
+
+  /** Arama dizini içerik değişmedikçe korunur; her tuş vuruşunda kurulmaz. */
+  const searchIndex = useMemo<SearchEntry[]>(
+    () =>
+      products.map((product) => ({
+        product,
+        haystack: normalize(
+          [
+            product.name,
+            product.summary,
+            product.description,
+            categoryName(product.categoryId) ?? "",
+            ...product.ingredients,
+            ...product.allergens,
+            ...product.tags.map((tag) => tags[tag]?.label ?? tag),
+          ].join(" "),
+        ),
+        name: normalize(product.name),
+      })),
+    [products, tags, categoryName],
+  );
 
   // Panel kapandığında sorguyu sıfırla; bir sonraki açılış temiz başlasın.
   useEffect(() => {
@@ -83,7 +91,7 @@ export function SearchOverlay({
     return () => window.clearTimeout(timer);
   }, [query]);
 
-  const results = useMemo(() => search(query), [query]);
+  const results = useMemo(() => search(searchIndex, query), [searchIndex, query]);
   const trimmed = query.trim();
 
   return (
@@ -197,6 +205,8 @@ function ResultRow({
   product: Product;
   onSelect: () => void;
 }) {
+  const { categoryName } = useMenuContent();
+
   return (
     <button
       type="button"
@@ -213,7 +223,7 @@ function ResultRow({
       />
       <div className="min-w-0 flex-1">
         <p className="text-[0.6rem] font-bold tracking-[0.16em] text-gold/80 uppercase">
-          {categoryNames.get(product.categoryId)}
+          {categoryName(product.categoryId)}
         </p>
         <p className="mt-0.5 truncate font-heading text-[0.95rem] font-medium text-ink">
           {product.name}

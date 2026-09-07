@@ -1,6 +1,8 @@
+"use client";
+
 import { Flame, Leaf, Snowflake, Sparkles, Star, Tag } from "lucide-react";
 
-import { badges as badgeMap, tags as tagMap } from "@/data/categories";
+import { useMenuContent } from "@/components/menu-content";
 import { cn } from "@/lib/utils";
 import type { BadgeId, TagId } from "@/types/menu";
 
@@ -21,7 +23,8 @@ const tagIcons: Record<string, typeof Leaf> = {
 };
 
 export function TagPill({ id, className }: { id: TagId; className?: string }) {
-  const tag = tagMap[id];
+  const { tags } = useMenuContent();
+  const tag = tags[id];
   if (!tag) return null;
   const Icon = tagIcons[id] ?? Tag;
 
@@ -62,7 +65,8 @@ const fallbackBadgeStyle =
   "text-gold bg-[#0d1013]/80 ring-1 ring-inset ring-gold/35 backdrop-blur-sm";
 
 export function ProductBadge({ id, className }: { id: BadgeId; className?: string }) {
-  const badge = badgeMap[id];
+  const { badges } = useMenuContent();
+  const badge = badges[id];
   if (!badge) return null;
 
   return (

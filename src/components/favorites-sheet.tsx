@@ -4,14 +4,11 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Heart, Trash2 } from "lucide-react";
 
 import { FavoriteButton } from "@/components/favorite-button";
+import { useMenuContent } from "@/components/menu-content";
 import { ProductImage } from "@/components/product-image";
 import { ResponsiveSheet } from "@/components/responsive-sheet";
-import { categories } from "@/data/categories";
-import { getProductById } from "@/data/products";
 import { useFavorites } from "@/hooks/use-favorites";
 import { formatPrice } from "@/lib/format";
-
-const categoryNames = new Map(categories.map((item) => [item.id, item.name]));
 
 /**
  * Favoriler paneli — mobilde bottom sheet, masaüstünde sağdan açılan panel.
@@ -27,6 +24,7 @@ export function FavoritesSheet({
   onSelectProduct: (id: string) => void;
 }) {
   const { ids, clear } = useFavorites();
+  const { categoryName, getProductById } = useMenuContent();
   const reduced = useReducedMotion();
 
   const items = ids
@@ -87,7 +85,7 @@ export function FavoritesSheet({
                       />
                       <div className="min-w-0 flex-1 pr-8">
                         <p className="text-[0.6rem] font-bold tracking-[0.16em] text-gold/80 uppercase">
-                          {categoryNames.get(product.categoryId)}
+                          {categoryName(product.categoryId)}
                         </p>
                         <p className="mt-0.5 truncate font-heading text-[0.92rem] font-medium text-ink">
                           {product.name}

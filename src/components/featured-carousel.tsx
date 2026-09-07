@@ -3,14 +3,12 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import { FavoriteButton } from "@/components/favorite-button";
+import { useMenuContent } from "@/components/menu-content";
 import { ProductImage } from "@/components/product-image";
 import { ProductBadge } from "@/components/product-tags";
-import { categories } from "@/data/categories";
 import { formatPrice } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/types/menu";
-
-const featuredCategory = categories[0];
 
 /**
  * "Baristanın Seçimleri" — yatay kaydırılabilir, tam boy fotoğraflı kartlar.
@@ -26,6 +24,9 @@ export function FeaturedCarousel({
   onOpen: (id: string) => void;
 }) {
   const reduced = useReducedMotion();
+  const { featuredCategory } = useMenuContent();
+
+  if (!featuredCategory) return null;
 
   return (
     <section

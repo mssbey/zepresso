@@ -14,9 +14,9 @@ import {
 } from "lucide-react";
 import { useState, type ComponentType, type SVGProps } from "react";
 
+import { useMenuContent } from "@/components/menu-content";
 import { ZepressoWordmark } from "@/components/zepresso-logo";
 import { photoCredits } from "@/data/photo-meta";
-import { venue } from "@/data/venue";
 import { cn } from "@/lib/utils";
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
@@ -46,6 +46,7 @@ function InstagramGlyph(props: SVGProps<SVGSVGElement>) {
  */
 export function VenueInfo() {
   const reduced = useReducedMotion();
+  const { venue } = useMenuContent();
 
   return (
     <section
@@ -193,6 +194,7 @@ function PhotoCreditsCard() {
 }
 
 function WifiCard() {
+  const { venue } = useMenuContent();
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {

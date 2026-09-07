@@ -7,6 +7,7 @@ import { FavoritesSheet } from "@/components/favorites-sheet";
 import { FeaturedCarousel } from "@/components/featured-carousel";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
+import { MenuContentProvider, useMenuContent } from "@/components/menu-content";
 import { MenuStoreProvider, useMenuStore } from "@/components/menu-store";
 import { MenuSection } from "@/components/menu-section";
 import { MobileBottomNav } from "@/components/mobile-bottom-nav";
@@ -15,33 +16,39 @@ import { ScrollProgress } from "@/components/scroll-progress";
 import { SearchOverlay } from "@/components/search-overlay";
 import { WelcomeCampaigns } from "@/components/welcome-campaigns";
 import { VenueInfo } from "@/components/venue-info";
-import { campaigns } from "@/data/campaigns";
-import { categories } from "@/data/categories";
-import { featuredProducts, products, productsByCategory } from "@/data/products";
 import { useActiveSection } from "@/hooks/use-active-section";
-import type { CategoryId } from "@/types/menu";
+import type { CategoryId, MenuContent } from "@/types/menu";
 
 const VENUE_SECTION = "mekan";
-const FEATURED_SECTION = categories[0].id;
 
-/** Kategori bölümleri — "Öne Çıkanlar" karusel olduğu için ayrı tutulur. */
-const menuCategories = categories.slice(1);
-
-export function MenuExperience() {
+export function MenuExperience({ content }: { content: MenuContent }) {
   return (
-    <MenuStoreProvider>
-      <Experience />
-    </MenuStoreProvider>
+    <MenuContentProvider content={content}>
+      <MenuStoreProvider>
+        <Experience />
+      </MenuStoreProvider>
+    </MenuContentProvider>
   );
 }
 
 function Experience() {
   const { panel, activeProductId, openSearch, openFavorites, openProduct, close } =
     useMenuStore();
+  const {
+    campaigns,
+    categories,
+    products,
+    featuredProducts,
+    productsByCategory,
+    menuCategories,
+  } = useMenuContent();
+
+  /** İlk kategori karusel olarak gösterilir; gezinme hedefi de odur. */
+  const featuredSection = categories[0]?.id;
 
   const sectionIds = useMemo(
     () => [...categories.map((category) => category.id), VENUE_SECTION],
-    [],
+    [categories],
   );
   const { activeId, scrollToSection } = useActiveSection(sectionIds);
 
@@ -64,9 +71,10 @@ function Experience() {
       if (id === "ara") return openSearch();
       if (id === "favoriler") return openFavorites();
       close();
-      scrollToSection(id === "mekan" ? VENUE_SECTION : FEATURED_SECTION);
+      const target = id === "mekan" ? VENUE_SECTION : featuredSection;
+      if (target) scrollToSection(target);
     },
-    [close, openFavorites, openSearch, scrollToSection],
+    [close, featuredSection, openFavorites, openSearch, scrollToSection],
   );
 
   /** Arama veya favorilerden bir ürüne geçiş: panel değişir, kaydırma bozulmaz. */
@@ -90,7 +98,7 @@ function Experience() {
         /* Mobil alt navigasyonun altında içerik kalmasın */
         className="grain relative pb-[calc(72px+env(safe-area-inset-bottom,0px))] md:pb-0"
       >
-        <Hero onExplore={() => scrollToSection(FEATURED_SECTION)} />
+        <Hero onExplore={() => featuredSection && scrollToSection(featuredSection)} />
 
         <CategoryRail activeId={activeId} onSelect={handleCategorySelect} />
 

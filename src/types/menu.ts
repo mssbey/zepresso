@@ -165,3 +165,17 @@ export interface Campaign {
   dailyStart?: string;
   dailyEnd?: string;
 }
+
+/**
+ * Müşteri menüsünün tek bir istekte okunan tüm içeriği.
+ * Sunucuda `getMenuContent()` ile üretilir, istemciye `MenuContentProvider`
+ * üzerinden dağıtılır.
+ */
+export interface MenuContent {
+  products: Product[];
+  categories: Category[];
+  tags: Record<TagId, Tag>;
+  badges: Record<BadgeId, Badge>;
+  venue: VenueInfo;
+  campaigns: Campaign[];
+}

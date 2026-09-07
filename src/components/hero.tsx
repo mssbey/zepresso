@@ -10,8 +10,8 @@ import {
 import { ArrowDown } from "lucide-react";
 import { useRef } from "react";
 
+import { useMenuContent } from "@/components/menu-content";
 import { ProductImage } from "@/components/product-image";
-import { venue } from "@/data/venue";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -23,6 +23,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
  */
 export function Hero({ onExplore }: { onExplore: () => void }) {
   const reduced = useReducedMotion();
+  const { venue } = useMenuContent();
   const ref = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({

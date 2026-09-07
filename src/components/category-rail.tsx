@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-import { categories } from "@/data/categories";
+import { useMenuContent } from "@/components/menu-content";
 import { cn } from "@/lib/utils";
 import type { CategoryId } from "@/types/menu";
 
@@ -22,6 +22,7 @@ export function CategoryRail({
   activeId: string;
   onSelect: (id: CategoryId) => void;
 }) {
+  const { categories } = useMenuContent();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef(new Map<string, HTMLButtonElement>());
   const reduced = useReducedMotion();

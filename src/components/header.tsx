@@ -4,9 +4,9 @@ import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { Heart, Search } from "lucide-react";
 import { useState } from "react";
 
+import { useMenuContent } from "@/components/menu-content";
 import { useMenuStore } from "@/components/menu-store";
 import { ZepressoLogo } from "@/components/zepresso-logo";
-import { venue } from "@/data/venue";
 import { useFavorites } from "@/hooks/use-favorites";
 import { cn } from "@/lib/utils";
 
@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
  */
 export function Header() {
   const { openSearch, openFavorites } = useMenuStore();
+  const { venue } = useMenuContent();
   const { count } = useFavorites();
   const [condensed, setCondensed] = useState(false);
   const { scrollY } = useScroll();
