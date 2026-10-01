@@ -4,18 +4,24 @@ const CATEGORY_IDS = [
   "one-cikanlar",
   "sicak-kahveler",
   "soguk-kahveler",
-  "imza-icecekler",
-  "caylar",
+  "milkshake-frappe",
+  "frozen",
+  "special-mocktail",
+  "bitki-caylari",
   "tatlilar",
+  "soguk-icecekler",
   "atistirmaliklar",
 ] as const;
 
 export const PRODUCT_CATEGORY_IDS = [
   "sicak-kahveler",
   "soguk-kahveler",
-  "imza-icecekler",
-  "caylar",
+  "milkshake-frappe",
+  "frozen",
+  "special-mocktail",
+  "bitki-caylari",
   "tatlilar",
+  "soguk-icecekler",
   "atistirmaliklar",
 ] as const;
 

@@ -46,10 +46,21 @@ export function MenuContentProvider({
       else byCategory.set(product.categoryId, [product]);
     }
 
+    /*
+     * Henüz ürünü olmayan kategoriler (ör. admin panelde yeni açılmış ama
+     * boş bir bölüm) müşteriye boş başlık olarak görünmesin; ilk ürün
+     * eklendiğinde kendiliğinden belirir. İlk kategori karusel olduğu için
+     * her zaman kalır.
+     */
+    const visibleCategories = categories.filter(
+      (category, index) => index === 0 || byCategory.has(category.id),
+    );
+
     return {
       ...content,
-      featuredCategory: categories[0],
-      menuCategories: categories.slice(1),
+      categories: visibleCategories,
+      featuredCategory: visibleCategories[0],
+      menuCategories: visibleCategories.slice(1),
       featuredProducts: products.filter((product) => product.featured),
       getProductById: (id) => byId.get(id),
       productsByCategory: (categoryId) => byCategory.get(categoryId) ?? [],

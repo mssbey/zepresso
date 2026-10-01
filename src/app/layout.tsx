@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s · Zepresso",
   },
   description:
-    "Zepresso Alsancak dijital menüsü. Sıcak ve soğuk kahveler, imza içecekler, çaylar, tatlılar ve atıştırmalıklar.",
+    "Zepresso Cumayeri dijital menüsü. Sıcak ve soğuk kahveler, milkshake, frozen, mocktail, bitki çayları, tatlılar ve soğuk içecekler.",
   applicationName: "Zepresso",
   formatDetection: { telephone: true, address: false, email: false },
   /* openGraph, mekân bilgisinden türetildiği için `src/app/page.tsx` içinde. */

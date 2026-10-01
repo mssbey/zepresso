@@ -10,25 +10,37 @@
       "id": "sicak-kahveler",
       "name": "Sıcak Kahveler",
       "eyebrow": "Sıcak",
-      "description": "Günlük kavrulan tek köken çekirdeklerle, espresso bazlı klasikler ve demleme yöntemleri."
+      "description": "Espresso bazlı klasikler, Türk kahvesi çeşitleri, çay ve kış içecekleri."
     },
     {
       "id": "soguk-kahveler",
       "name": "Soğuk Kahveler",
       "eyebrow": "Soğuk",
-      "description": "18 saat soğuk demlenen bazlar, buzla açılan aromalar ve gün boyu ferahlatan tarifler."
+      "description": "Buz üzerinde lattelar, macchiatolar ve filtre kahveler."
     },
     {
-      "id": "imza-icecekler",
-      "name": "İmza İçecekler",
+      "id": "milkshake-frappe",
+      "name": "Milkshake & Frappe",
+      "eyebrow": "Kremalı",
+      "description": "Dondurmalı milkshakeler ve köpüklü frappe."
+    },
+    {
+      "id": "frozen",
+      "name": "Frozen",
+      "eyebrow": "Buzlu",
+      "description": "Taze meyvelerle hazırlanan buzlu frozenlar."
+    },
+    {
+      "id": "special-mocktail",
+      "name": "Special Mocktail",
       "eyebrow": "Zepresso imzası",
-      "description": "Yalnızca burada bulacağınız, mutfakta geliştirilen özel şurup ve infüzyonlarla hazırlanan tarifler."
+      "description": "Zepresso'ya özel mocktail tarifleri ve ferahlatıcı klasikler."
     },
     {
-      "id": "caylar",
-      "name": "Çaylar",
+      "id": "bitki-caylari",
+      "name": "Bitki Çayları",
       "eyebrow": "Demleme",
-      "description": "Rize'den gelen harmanlar, botanik infüzyonlar ve tören usulü hazırlanan matcha."
+      "description": "Ada çayı, ıhlamur ve sıcak bitki çayları."
     },
     {
       "id": "tatlilar",
@@ -37,10 +49,16 @@
       "description": "Her sabah mutfağımızda hazırlanan, kahvenin yanında dengeli durması için tasarlanmış tatlılar."
     },
     {
+      "id": "soguk-icecekler",
+      "name": "Soğuk İçecekler",
+      "eyebrow": "Serin",
+      "description": "Limonatalar, sodalar ve soğuk içecekler."
+    },
+    {
       "id": "atistirmaliklar",
       "name": "Atıştırmalıklar",
       "eyebrow": "Mutfak",
-      "description": "Ekşi maya ekmekler, günlük açılan hamur işleri ve doyurucu tuzlu seçenekler."
+      "description": "Kahvenin yanına tuzlu ve tatlı atıştırmalıklar."
     }
   ],
   "tags": {

@@ -121,21 +121,23 @@ function DetailContent({
         </p>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          <Panel
-            icon={<Leaf className="size-3.5" strokeWidth={2.4} aria-hidden="true" />}
-            title="İçindekiler"
-          >
-            <ul className="flex flex-wrap gap-1.5">
-              {product.ingredients.map((item) => (
-                <li
-                  key={item}
-                  className="rounded-full bg-white/5 px-2.5 py-1 text-[0.72rem] leading-none text-ink/85 ring-1 ring-inset ring-white/8"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Panel>
+          {product.ingredients.length > 0 && (
+            <Panel
+              icon={<Leaf className="size-3.5" strokeWidth={2.4} aria-hidden="true" />}
+              title="İçindekiler"
+            >
+              <ul className="flex flex-wrap gap-1.5">
+                {product.ingredients.map((item) => (
+                  <li
+                    key={item}
+                    className="rounded-full bg-white/5 px-2.5 py-1 text-[0.72rem] leading-none text-ink/85 ring-1 ring-inset ring-white/8"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </Panel>
+          )}
 
           <Panel
             icon={
@@ -157,7 +159,7 @@ function DetailContent({
               </ul>
             ) : (
               <p className="text-[0.78rem] leading-relaxed text-dim">
-                Bilinen bir alerjen içermiyor.
+                Alerjen bilgisi için lütfen personelimize danışın.
               </p>
             )}
           </Panel>

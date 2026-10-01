@@ -2,8 +2,6 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  Camera,
-  ChevronDown,
   Clock,
   Copy,
   Check,
@@ -16,7 +14,6 @@ import { useState, type ComponentType, type SVGProps } from "react";
 
 import { useMenuContent } from "@/components/menu-content";
 import { ZepressoWordmark } from "@/components/zepresso-logo";
-import { photoCredits } from "@/data/photo-meta";
 import { cn } from "@/lib/utils";
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
@@ -139,8 +136,6 @@ export function VenueInfo() {
           </p>
         </div>
 
-        <PhotoCreditsCard />
-
         <div className="mt-12 flex flex-col items-center gap-5 border-t border-white/6 pt-10">
           <ZepressoWordmark />
           <p className="max-w-[46ch] text-center text-[0.72rem] leading-relaxed text-dim/60">
@@ -150,46 +145,6 @@ export function VenueInfo() {
         </div>
       </motion.div>
     </section>
-  );
-}
-
-/**
- * Fotoğraf künyesi.
- *
- * Görseller Unsplash'ten alınıyor; lisans, fotoğrafçının adının ve
- * bağlantısının görünür olmasını istiyor. Ayrıntı gürültü yapmasın diye
- * katlanabilir bir öğe içinde duruyor.
- */
-function PhotoCreditsCard() {
-  return (
-    <details className="surface-card group mt-3 overflow-hidden rounded-2xl">
-      <summary className="flex cursor-pointer list-none items-center gap-2 p-4 text-[0.72rem] text-dim transition-colors duration-300 hover:text-ink sm:p-5 [&::-webkit-details-marker]:hidden">
-        <Camera className="size-3.5 shrink-0 text-gold/70" strokeWidth={2.2} aria-hidden="true" />
-        Ürün fotoğrafları temsilîdir — Unsplash
-        <ChevronDown
-          className="ml-auto size-4 shrink-0 transition-transform duration-300 group-open:rotate-180"
-          strokeWidth={2.2}
-          aria-hidden="true"
-        />
-      </summary>
-      <div className="border-t border-white/6 px-4 py-4 sm:px-5">
-        <p className="flex flex-wrap gap-x-1.5 gap-y-1 text-[0.7rem] leading-relaxed text-dim/70">
-          {photoCredits.map((credit, index) => (
-            <span key={credit.authorUrl}>
-              <a
-                href={credit.authorUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors duration-300 hover:text-gold"
-              >
-                {credit.author}
-              </a>
-              {index < photoCredits.length - 1 && <span aria-hidden="true"> ·</span>}
-            </span>
-          ))}
-        </p>
-      </div>
-    </details>
   );
 }
 

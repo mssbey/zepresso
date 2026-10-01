@@ -9,9 +9,12 @@ export type CategoryId =
   | "one-cikanlar"
   | "sicak-kahveler"
   | "soguk-kahveler"
-  | "imza-icecekler"
-  | "caylar"
+  | "milkshake-frappe"
+  | "frozen"
+  | "special-mocktail"
+  | "bitki-caylari"
   | "tatlilar"
+  | "soguk-icecekler"
   | "atistirmaliklar";
 
 /**

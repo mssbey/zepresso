@@ -1,14 +1,14 @@
 {
   "name": "Zepresso",
   "tagline": "Kahvenin en karanlık ve en güzel hâli.",
-  "district": "Alsancak",
-  "city": "İzmir",
-  "address": "Kıbrıs Şehitleri Cad. No: 142/A, Alsancak, Konak / İzmir",
-  "phone": "0232 464 18 30",
-  "phoneHref": "tel:+902324641830",
-  "instagram": "@zepressocoffee",
-  "instagramUrl": "https://instagram.com/zepressocoffee",
-  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kıbrıs+Şehitleri+Caddesi+Alsancak+İzmir",
+  "district": "Cumayeri",
+  "city": "DÜZCE",
+  "address": "Çevrik Mah. Sağlık Cad. 31/A Cumayeri/DÜZCE",
+  "phone": "5337931327",
+  "phoneHref": "5337931327",
+  "instagram": "@zepresso81",
+  "instagramUrl": "https://instagram.com/zepresso81",
+  "mapsUrl": "https://maps.app.goo.gl/v3iehDrUcLjodunn9",
   "wifi": {
     "network": "Zepresso_Guest",
     "password": "kahve2024"

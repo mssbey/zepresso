@@ -81,7 +81,7 @@ export function ZepressoWordmark({ className }: { className?: string }) {
         Zepresso
       </span>
       <span className="text-[0.6rem] font-semibold tracking-[0.42em] text-dim uppercase">
-        Alsancak · İzmir
+        Cumayeri · Düzce
       </span>
     </div>
   );

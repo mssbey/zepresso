@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { getPhotoMeta } from "@/data/photo-meta";
 import { cn } from "@/lib/utils";
@@ -45,6 +45,16 @@ export function ProductImage({
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
   const blur = photoId ? getPhotoMeta(photoId)?.blur : undefined;
 
+  /**
+   * Sayfa sunucuda üretildiği için tarayıcı görseli hidrasyondan önce
+   * indirmeye başlar. Görsel React bağlanmadan inerse `onLoad` hiç tetiklenmez
+   * ve görsel bulanık önizlemenin arkasında görünmez kalırdı; bu yüzden
+   * bağlanırken görselin zaten inip inmediğine bakılır.
+   */
+  const imageRef = useCallback((node: HTMLImageElement | null) => {
+    if (node?.complete && node.naturalWidth > 0) setState("ready");
+  }, []);
+
   return (
     <div className={cn("relative overflow-hidden bg-[#0b0e11]", className)}>
       {blur ? (
@@ -67,6 +77,7 @@ export function ProductImage({
       ) : (
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
+          ref={imageRef}
           src={src}
           alt={alt}
           sizes={sizes}
